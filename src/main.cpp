@@ -6,6 +6,7 @@
 #include <cstdio>
 #include <string>
 #include "polygon2/polygon.hpp"
+#include "polygon2/hull.hpp"
 
 
 /***********************************************************
@@ -43,13 +44,11 @@ bool getFileContent(const std::string fileName,
 * Create vector of vertices from input data 
 ***********************************************************/
 bool getVertexVector(std::vector<std::string> &vecOfStrs,
-                     std::vector<Vertex*> & vecOfVerts)
+                     std::vector<Vertex*> &vecOfVerts)
 {
   int x,y;
   int iVert = 0;
 
-  //std::cout << "Input polygon: " << std::endl;
-  
   // Print vector contents
   for (std::string & line : vecOfStrs) {
     // Convert to integer 
@@ -60,9 +59,6 @@ bool getVertexVector(std::vector<std::string> &vecOfStrs,
         << std::endl;
       return false;
     }
-
-    //std::cout << "Vertex " << iVert << ": (" << x 
-    //  << ", " << y << ") " << std::endl;
 
     // Add vertex to vertex vector
     Vertex* newVert = new Vertex(iVert, x, y);
@@ -98,14 +94,20 @@ int main(int argc, char *argv[])
   if ( !getVertexVector(vecOfStrs, vecOfVerts) )
     exit(1);
 
+  // Reduce vertices to convex hull
+  findLowest(vecOfVerts);
+
   // Initialize polygon
   Polygon* poly = new Polygon();
   for (Vertex* v : vecOfVerts) {
     poly->add_vertex(v);
   }
 
-  //std::cout << "Create triangulation: " << std::endl;
-  triangulate( poly );
+  std::cout << "Vertices: " << std::endl;
+  poly->print_vertices();
+
+  // Triangulate convex hull
+  //triangulate( poly );
 
   return 0;
 }
