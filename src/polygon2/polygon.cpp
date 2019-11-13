@@ -6,7 +6,7 @@
 /***********************************************************
 * Function to calcualte twice the area of a triangle (a,b,c)
 ***********************************************************/
-static inline int area2( Vertex* a, Vertex* b, Vertex* c )
+int area2( Vertex* a, Vertex* b, Vertex* c )
 {
   return 
     (b->get_x() - a->get_x()) * (c->get_y() - a->get_y()) - 

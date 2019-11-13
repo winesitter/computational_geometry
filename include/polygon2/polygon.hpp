@@ -1,5 +1,5 @@
-#ifndef POLYGON2_POLYGON__
-  #define POLYGON2_POLYGON_
+#ifndef POLYGON2_POLYGON_
+#define POLYGON2_POLYGON_
 
 #include <iostream>
 #include <vector>
@@ -16,6 +16,7 @@ class Vertex {
     int      ind;          // Index
     int      x,y;          // Coordinates
     bool     ear;          // True iff an ear
+    bool     remove;       // True iff should be removed
     Vertex*  next;
     Vertex*  prev;
 
@@ -29,6 +30,7 @@ class Vertex {
       x       = x0;
       y       = y0; 
       ear     = false; 
+      remove  = false;
       next    = NULL;
       prev    = NULL;
     }
@@ -40,6 +42,7 @@ class Vertex {
     void set_x( int x0 ){ x = x0; }
     void set_y( int y0 ){ y = y0; }
     void set_ear( bool isEar ){ ear = isEar; }
+    void set_rem( bool doRem ){ remove = doRem; }
     void set_next( Vertex* v ){ next = v; }
     void set_prev( Vertex* v ){ prev = v; }
 
@@ -50,6 +53,7 @@ class Vertex {
     int     get_x( void ){ return x; }
     int     get_y( void ){ return y; }
     bool    get_ear( void ){ return ear; }
+    bool    get_rem( void ){ return remove; }
     Vertex* get_next( void ){ return next; }
     Vertex* get_prev( void ){ return prev; }
 
@@ -91,6 +95,10 @@ class Polygon {
 /***********************************************************
 * Definition of functions
 ***********************************************************/
+/***********************************************************
+* Function to calcualte twice the area of a triangle (a,b,c)
+***********************************************************/
+int area2( Vertex* a, Vertex* b, Vertex* c );
 
 /***********************************************************
 * Exclusive or: True if and only if exactly one argument 

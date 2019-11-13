@@ -44,9 +44,9 @@ def main():
     ax.add_collection(patch_col)
 
     # Plot polygon
-    poly = Polygon(vertices)
-    patch_col = PatchCollection([poly], edgecolor='k', facecolors='', linewidth=2.0)
-    ax.add_collection(patch_col)
+    #poly = Polygon(vertices)
+    #patch_col = PatchCollection([poly], edgecolor='k', facecolors='', linewidth=2.0)
+    #ax.add_collection(patch_col)
 
     # Plot vertices
     ax.scatter(vertices[:,0], vertices[:,1], c='k', s=35)

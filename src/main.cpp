@@ -5,6 +5,8 @@
 #include <vector>
 #include <cstdio>
 #include <string>
+#include <bits/stdc++.h>
+
 #include "polygon2/polygon.hpp"
 #include "polygon2/hull.hpp"
 
@@ -94,20 +96,24 @@ int main(int argc, char *argv[])
   if ( !getVertexVector(vecOfStrs, vecOfVerts) )
     exit(1);
 
-  // Reduce vertices to convex hull
-  findLowest(vecOfVerts);
 
-  // Initialize polygon
-  Polygon* poly = new Polygon();
+  /* Initialize polygon
+   *
+   * ADD EXTRA FLAG TO TRIANGULATE POLYGON
+   *
+  Polygon* hull = new Polygon();
   for (Vertex* v : vecOfVerts) {
-    poly->add_vertex(v);
+    hull->add_vertex(v);
   }
+  */
 
-  std::cout << "Vertices: " << std::endl;
-  poly->print_vertices();
+  // Extract convex hull of point set
+  Polygon* hull = hullGraham(vecOfVerts);
 
   // Triangulate convex hull
-  //triangulate( poly );
+  triangulate( hull );
+
+  delete hull;
 
   return 0;
 }

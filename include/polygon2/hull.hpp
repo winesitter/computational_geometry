@@ -16,4 +16,19 @@
 ***********************************************************/
 void findLowest( std::vector<Vertex*> &vertices );
 
+/***********************************************************
+* Set starting vertex for sorting
+***********************************************************/
+void setRefVertex(Vertex* pRef);
+
+/***********************************************************
+* Comparison function for sort of convex hull
+***********************************************************/
+bool hullCompare(Vertex* pi, Vertex* pj);
+
+/***********************************************************
+* Graham's Scan algorithm
+***********************************************************/
+Polygon* hullGraham( std::vector<Vertex*> &vertices );
+
 #endif
