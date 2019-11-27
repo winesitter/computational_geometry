@@ -176,6 +176,6 @@ void initEars( Polygon* p );
 /***********************************************************
 * Triangulate a polygon p
 ***********************************************************/
-void triangulate( Polygon* p );
+void triangulatePolygon( Polygon* p );
 
 #endif

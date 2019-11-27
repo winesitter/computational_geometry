@@ -1,0 +1,76 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+APP_DIR	Makefile	/^APP_DIR  := $(BUILD)\/apps$/;"	m
+BUILD	Makefile	/^BUILD    := .\/build$/;"	m
+CXX	Makefile	/^CXX      := -c++$/;"	m
+CXXFLAGS	Makefile	/^CXXFLAGS := -pedantic-errors -Wall -Wextra -Werror$/;"	m
+DIM	include/polygon2/globals.hpp	/^const int DIM = 2;$/;"	v
+INCLUDE	Makefile	/^INCLUDE  := -Iinclude\/$/;"	m
+LDFLAGS	Makefile	/^LDFLAGS  := -L\/usr\/lib -lstdc++ -lm -lglut -lGLU -lGL$/;"	m
+OBJECTS	Makefile	/^OBJECTS := $(SRC:%.cpp=$(OBJ_DIR)\/%.o)$/;"	m
+OBJ_DIR	Makefile	/^OBJ_DIR  := $(BUILD)\/objects$/;"	m
+POLYGON2_GLOBALS_	include/polygon2/globals.hpp	2;"	d
+POLYGON2_HULL_	include/polygon2/hull.hpp	2;"	d
+POLYGON2_POLYGON_	include/polygon2/polygon.hpp	2;"	d
+Polygon	include/polygon2/polygon.hpp	/^    Polygon( void ) $/;"	f	class:Polygon
+Polygon	include/polygon2/polygon.hpp	/^class Polygon {$/;"	c
+SRC	Makefile	/^SRC      :=                      \\$/;"	m
+TARGET	Makefile	/^TARGET   := triangulate$/;"	m
+Vertex	include/polygon2/polygon.hpp	/^    Vertex( int i,  int x0, int y0 ) $/;"	f	class:Vertex
+Vertex	include/polygon2/polygon.hpp	/^class Vertex {$/;"	c
+add_vertex	src/polygon2/polygon.cpp	/^void Polygon::add_vertex(Vertex* v) $/;"	f	class:Polygon
+area2	src/polygon2/polygon.cpp	/^int area2( Vertex* a, Vertex* b, Vertex* c )$/;"	f
+calc_area	src/polygon2/polygon.cpp	/^int Polygon::calc_area( void ) {$/;"	f	class:Polygon
+doIntersect	src/polygon2/polygon.cpp	/^bool doIntersect( Vertex* a, Vertex* b,$/;"	f
+doIntersectProperly	src/polygon2/polygon.cpp	/^bool doIntersectProperly( Vertex* a, Vertex* b, $/;"	f
+ear	include/polygon2/polygon.hpp	/^    bool     ear;          \/\/ True iff an ear$/;"	m	class:Vertex
+findLowest	src/polygon2/hull.cpp	/^void findLowest( std::vector<Vertex*> &vertices ) $/;"	f
+getFileContent	src/main.cpp	/^static bool getFileContent(const std::string fileName, $/;"	f	file:
+getVertexVector	src/main.cpp	/^static bool getVertexVector(std::vector<std::string> &vecOfStrs,$/;"	f	file:
+get_ear	include/polygon2/polygon.hpp	/^    bool    get_ear( void ){ return ear; }$/;"	f	class:Vertex
+get_head	include/polygon2/polygon.hpp	/^    Vertex* get_head( void ){ return head; }$/;"	f	class:Polygon
+get_ind	include/polygon2/polygon.hpp	/^    int     get_ind( void ){ return ind; }$/;"	f	class:Vertex
+get_nVerts	include/polygon2/polygon.hpp	/^    int     get_nVerts( void ){ return nVerts; }$/;"	f	class:Polygon
+get_next	include/polygon2/polygon.hpp	/^    Vertex* get_next( void ){ return next; }$/;"	f	class:Vertex
+get_prev	include/polygon2/polygon.hpp	/^    Vertex* get_prev( void ){ return prev; }$/;"	f	class:Vertex
+get_rem	include/polygon2/polygon.hpp	/^    bool    get_rem( void ){ return remove; }$/;"	f	class:Vertex
+get_x	include/polygon2/polygon.hpp	/^    int     get_x( void ){ return x; }$/;"	f	class:Vertex
+get_y	include/polygon2/polygon.hpp	/^    int     get_y( void ){ return y; }$/;"	f	class:Vertex
+head	include/polygon2/polygon.hpp	/^    Vertex* head;$/;"	m	class:Polygon
+hullCompare	src/polygon2/hull.cpp	/^bool hullCompare(Vertex* pi, Vertex* pj) $/;"	f
+hullGraham	src/polygon2/hull.cpp	/^Polygon* hullGraham( std::vector<Vertex*> &vertices )$/;"	f
+ind	include/polygon2/polygon.hpp	/^    int      ind;          \/\/ Index$/;"	m	class:Vertex
+initEars	src/polygon2/polygon.cpp	/^void initEars( Polygon* p )$/;"	f
+isBetween	src/polygon2/polygon.cpp	/^bool isBetween( Vertex *a, Vertex* b, Vertex* c )$/;"	f
+isCollinear	src/polygon2/polygon.cpp	/^bool isCollinear( Vertex* a, Vertex* b, Vertex* c )$/;"	f
+isDiagonal	src/polygon2/polygon.cpp	/^bool isDiagonal( Vertex* a, Vertex* b, Polygon* p)$/;"	f
+isDiagonalIE	src/polygon2/polygon.cpp	/^bool isDiagonalIE( Vertex* a, Vertex* b, Polygon* p)$/;"	f
+isInCone	src/polygon2/polygon.cpp	/^bool isInCone( Vertex* a, Vertex* b)$/;"	f
+isLeft	src/polygon2/polygon.cpp	/^bool isLeft( Vertex* a, Vertex* b, Vertex* c )$/;"	f
+isLeftOn	src/polygon2/polygon.cpp	/^bool isLeftOn( Vertex* a, Vertex* b, Vertex* c )$/;"	f
+main	src/main.cpp	/^int main(int argc, char *argv[]) $/;"	f
+main	test/plotPloy.py	/^def main():$/;"	f
+nVerts	include/polygon2/polygon.hpp	/^    int     nVerts;$/;"	m	class:Polygon
+next	include/polygon2/polygon.hpp	/^    Vertex*  next;$/;"	m	class:Vertex
+p0	src/polygon2/hull.cpp	/^static Vertex* p0 = NULL;$/;"	v	file:
+prev	include/polygon2/polygon.hpp	/^    Vertex*  prev;$/;"	m	class:Vertex
+print_vertices	src/polygon2/polygon.cpp	/^void Polygon::print_vertices( void ) {$/;"	f	class:Polygon
+rem_vertex	src/polygon2/polygon.cpp	/^void Polygon::rem_vertex(Vertex* v) $/;"	f	class:Polygon
+remove	include/polygon2/polygon.hpp	/^    bool     remove;       \/\/ True iff should be removed$/;"	m	class:Vertex
+setRefVertex	src/polygon2/hull.cpp	/^void setRefVertex(Vertex* pRef)$/;"	f
+set_ear	include/polygon2/polygon.hpp	/^    void set_ear( bool isEar ){ ear = isEar; }$/;"	f	class:Vertex
+set_ind	include/polygon2/polygon.hpp	/^    void set_ind( int i ){ ind = i; }$/;"	f	class:Vertex
+set_next	include/polygon2/polygon.hpp	/^    void set_next( Vertex* v ){ next = v; }$/;"	f	class:Vertex
+set_prev	include/polygon2/polygon.hpp	/^    void set_prev( Vertex* v ){ prev = v; }$/;"	f	class:Vertex
+set_rem	include/polygon2/polygon.hpp	/^    void set_rem( bool doRem ){ remove = doRem; }$/;"	f	class:Vertex
+set_x	include/polygon2/polygon.hpp	/^    void set_x( int x0 ){ x = x0; }$/;"	f	class:Vertex
+set_y	include/polygon2/polygon.hpp	/^    void set_y( int y0 ){ y = y0; }$/;"	f	class:Vertex
+show_help	src/main.cpp	/^static void show_help(std::string name)$/;"	f	file:
+triangulate	src/polygon2/polygon.cpp	/^void triangulate( Polygon* p )$/;"	f
+x	include/polygon2/polygon.hpp	/^    int      x,y;          \/\/ Coordinates$/;"	m	class:Vertex
+xOr	src/polygon2/polygon.cpp	/^bool xOr( bool x, bool y )$/;"	f
+y	include/polygon2/polygon.hpp	/^    int      x,y;          \/\/ Coordinates$/;"	m	class:Vertex

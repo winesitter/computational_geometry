@@ -5,18 +5,35 @@
 #include <vector>
 #include <cstdio>
 #include <string>
-#include <bits/stdc++.h>
 
+// Libraries for using getopt
+#include <stdio.h>
+#include <unistd.h>
+
+// Local file definitions
 #include "polygon2/polygon.hpp"
 #include "polygon2/hull.hpp"
+
+
+/***********************************************************
+* Print help of the program to console
+***********************************************************/
+static void show_help(std::string name)
+{
+  std::cerr << "\nUsage: " << name << " <option(s)> VERTICES\n\n"
+            << "Options:\n"
+            << "\t-h,--help\t\tShow this help message\n"
+            << "\t-p,--poly\t\tInput vertices define polygon in CCW order.\n"
+            << std::endl;
+}
 
 
 /***********************************************************
 * Iterate through all lines of a file and put them into 
 * a given vector 
 ***********************************************************/
-bool getFileContent(const std::string fileName, 
-                    std::vector<std::string> & vecOfStrs)
+static bool getFileContent(const std::string fileName, 
+                           std::vector<std::string> & vecOfStrs)
 {
   // Open the file
   std::ifstream in(fileName.c_str());
@@ -45,8 +62,8 @@ bool getFileContent(const std::string fileName,
 /***********************************************************
 * Create vector of vertices from input data 
 ***********************************************************/
-bool getVertexVector(std::vector<std::string> &vecOfStrs,
-                     std::vector<Vertex*> &vecOfVerts)
+static bool getVertexVector(std::vector<std::string> &vecOfStrs,
+                            std::vector<Vertex*> &vecOfVerts)
 {
   int x,y;
   int iVert = 0;
@@ -80,38 +97,63 @@ int main(int argc, char *argv[])
   // Check for arguments
   if (argc < 2)
   {
-    std::cout << "\ntriangulate <vertexCoords.vert> \n" << std::endl;
+    show_help(argv[0]);
     exit(1);
+  }
+
+  int opt;
+  int triType = 0;
+  std::string vertexFile;
+  
+  // Get additonal command line arguments 
+  while( ( opt = getopt(argc, argv, "hp")) != EOF) {
+    switch( opt ) {
+
+      case 'h':
+        show_help(argv[0]);
+        exit(1);
+
+      case 'p':
+        triType = 1;
+        break;
+    }
+  }
+  
+  // Get name of vertex file
+  for (; optind < argc; optind++){
+    vertexFile = argv[optind];
   }
 
   // Init string vector, vertex vector and filename
   std::vector<std::string> vecOfStrs;
   std::vector<Vertex*> vecOfVerts; 
-  std::string fileName = static_cast<std::string>(argv[1]);
+  std::string fileName = static_cast<std::string>(vertexFile);
 
   // Get the contents of input file
   if ( !getFileContent(fileName, vecOfStrs) )
     exit(1);
 
+  // Create vector of all vertices
   if ( !getVertexVector(vecOfStrs, vecOfVerts) )
     exit(1);
 
-
-  /* Initialize polygon
-   *
-   * ADD EXTRA FLAG TO TRIANGULATE POLYGON
-   *
-  Polygon* hull = new Polygon();
-  for (Vertex* v : vecOfVerts) {
-    hull->add_vertex(v);
+  Polygon* hull = NULL;
+  switch (triType) {
+    case 0:
+      // Extract convex hull of point set
+      hull = hullGraham(vecOfVerts);
+      break;
+    case 1:
+      // Assume vertices are CCW defined polygon
+      hull = new Polygon();
+      for (Vertex* v : vecOfVerts) {
+        hull->add_vertex(v);
+      }
+      break;
   }
-  */
-
-  // Extract convex hull of point set
-  Polygon* hull = hullGraham(vecOfVerts);
 
   // Triangulate convex hull
-  triangulate( hull );
+  triangulatePolygon( hull );
 
   delete hull;
 

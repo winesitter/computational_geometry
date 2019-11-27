@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <bits/stdc++.h>
 
 #include "polygon2/hull.hpp"
 #include "polygon2/polygon.hpp"

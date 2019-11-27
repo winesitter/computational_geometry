@@ -194,7 +194,7 @@ void initEars( Polygon* p )
 /***********************************************************
 * Triangulate a polygon p
 ***********************************************************/
-void triangulate( Polygon* p )
+void triangulatePolygon( Polygon* p )
 {
   Vertex *v0 = NULL, *v1 = NULL, *v2 = NULL;
   Vertex *v3 = NULL, *v4 = NULL;
