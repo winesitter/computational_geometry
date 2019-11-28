@@ -12,6 +12,7 @@ TARGET   := triangulate
 INCLUDE  := -Iinclude/
 SRC      :=                      \
    $(wildcard src/polygon2/*.cpp) \
+   $(wildcard src/polygon3/*.cpp) \
    $(wildcard src/*.cpp)         \
 
 OBJECTS := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
