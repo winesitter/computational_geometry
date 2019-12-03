@@ -239,6 +239,6 @@ bool isCollinear3( Vertex3* a, Vertex3* b, Vertex3* c );
 * 3) Find a fourht point v3, which is not coplanar with
 *    (v0, v1, v2)
 ***********************************************************/
-void initDoubleTriangle( std::vector<Vertex3*>& verts );
+void initDoubleTriangle( Vertex3* verts );
 
 #endif

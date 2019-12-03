@@ -12,6 +12,7 @@
 
 // Local file definitions
 #include "polygon3/polygon3.hpp"
+#include "gl_util/gl_init.hpp"
 
 
 /***********************************************************
@@ -46,67 +47,73 @@ static bool getFileContent(const std::string fileName,
 
 
 /***********************************************************
-* Create vector of vertices from input data 
-***********************************************************/
-static bool getVertexVector(std::vector<std::string> &vecOfStrs,
-                            std::vector<Vertex3*> &vecOfVerts)
-{
-  int x,y,z;
-  int iVert = 0;
-
-  // Print vector contents
-  for (std::string & line : vecOfStrs) {
-    // Convert to integer 
-    if (sscanf(line.c_str(), "%d %d %d", &x, &y, &z) != 3) {
-      std::cout << "Can not convert line " << iVert 
-        << std::endl;
-      std::cout << "Need format x y z for every vertex" 
-        << std::endl;
-      return false;
-    }
-
-    // Add vertex to vertex vector
-    Vertex3* newVert = new Vertex3(iVert, x, y, z);
-    vecOfVerts.push_back(newVert);
-    
-    ++iVert;
-  }
-
-  return true;
-
-}
-
-/***********************************************************
 * Arrange vertext structure in terms of a linked list
 * and return pointer to head of linked list
 ***********************************************************/
-static Vertex3* initVertices(std::vector<std::string> &vecOfStrs)
+static Vertex3* initVertexList(std::vector<std::string> &vecOfStrs)
 {
   int x,y,z;
   int iVert = 0;
+  int nVerts = static_cast<int>(vecOfStrs.size());
 
-  Vertex3* vertices;
+  Vertex3* prev = nullptr;
+  Vertex3* head = nullptr;
 
-  // Print vector contents
-  for (std::string & line : vecOfStrs) {
-
-    // Convert to integer 
-    if (sscanf(line.c_str(), "%d %d %d", &x, &y, &z) != 3) {
+  while (iVert < nVerts)
+  {
+    // Convert data to integer 
+    if (sscanf(vecOfStrs[iVert].c_str(), "%d %d %d", &x, &y, &z) != 3) {
       std::cout << "Can not convert line " << iVert 
         << std::endl;
       std::cout << "Need format x y z for every vertex" 
         << std::endl;
-      return false;
+      exit(1);
     }
 
-    // Add vertex to vertex vector
-    Vertex3* newVert = new Vertex3(iVert, x, y, z);
+    // Create new vertex
+    Vertex3* next = new Vertex3(iVert, x, y, z);
 
+    // Output for user
+    std::cout << "Create new " << *next << std::endl;
+
+    // Initialize head of list
+    if (prev == nullptr)
+      head = next;
+    // create links for list
+    else {
+      prev->setNext(next);
+      next->setPrev(prev);
+    }
+
+    // store last vertex
+    prev = next;
+    ++iVert;
   }
 
-  return vertices;
+  // close circular doubly linked list of vertices
+  head->setPrev(prev);
+  prev->setNext(head);
 
-} /* initVertices() *>7
+  return head;
+
+} /* initVertexList() */
+
+/***********************************************************
+* Free data behind of the doubly linked vertex list
+***********************************************************/
+static void freeVertexList(Vertex3* head)
+{
+  Vertex3* cur  = head->getNext();
+  Vertex3* next = cur->getNext();
+  do {
+    delete cur;
+    cur = next;
+    next = cur->getNext();
+  } while( cur != head);
+
+  delete cur;
+
+} /* freeVertexList() */
 
 
 int main( int argc, char *argv[] )
@@ -130,21 +137,17 @@ int main( int argc, char *argv[] )
   if ( !getFileContent(fileName, vecOfStrs) )
     exit(1);
 
-  // Create vector of all vertices
-  if ( !getVertexVector(vecOfStrs, vecOfVerts) )
-    exit(1);
+  // Read vertex data from text file and store in list
+  Vertex3* vHead = initVertexList(vecOfStrs);
 
-  // Process vertex data
-  for (Vertex3* v : vecOfVerts) {
-    std::cout << *v << std::endl;
-  }
-  initDoubleTriangle(vecOfVerts);
+  // Initialzize hull
+  initDoubleTriangle(vHead);
 
-  // free data
-  for (Vertex3* v : vecOfVerts) 
-    delete v;
+  // free vertex data
+  freeVertexList(vHead);
 
-
+  // Render data
+  gl_start(1, argv, vHead);
 
   return 0;
 }
