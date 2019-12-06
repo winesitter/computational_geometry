@@ -12,7 +12,9 @@
 
 // Local file definitions
 #include "polygon3/polygon3.hpp"
-#include "gl_util/gl_init.hpp"
+#include "glut/GlutFramework.hpp"
+
+
 
 
 /***********************************************************
@@ -147,7 +149,12 @@ int main( int argc, char *argv[] )
   freeVertexList(vHead);
 
   // Render data
-  gl_start(1, argv, vHead);
+  glutFramework::GlutFrameworkTri framework;
+  framework.setLookAt(0.0, 2.0, 10.0, 
+                      0.0, 2.0, 0.0, 
+                      0.0, 1.0, 0.0);
+  framework.startFramework(argc, argv);
+  // No code below startFramework() will get executed
 
   return 0;
 }

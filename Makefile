@@ -13,7 +13,7 @@ INCLUDE  := -Iinclude/
 SRC      :=                      \
    $(wildcard src/polygon2/*.cpp) \
    $(wildcard src/polygon3/*.cpp) \
-   $(wildcard src/gl_util/*.cpp) \
+   $(wildcard src/glut/*.cpp) \
    $(wildcard src/*.cpp)         \
 
 OBJECTS := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
