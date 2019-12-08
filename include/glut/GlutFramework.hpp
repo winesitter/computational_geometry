@@ -44,11 +44,10 @@
 	#include <GL/glut.h>
 #endif
 
-
-
 #include "glut/Keyboard.hpp"
 #include "glut/PerformanceTimer.hpp"
 #include "glut/Vector.hpp"
+
 
 /** GlutFramework.h
  *
@@ -86,8 +85,7 @@ namespace glutFramework {
   /*-------------------------------------------------------
   | Private attributes
   -------------------------------------------------------*/
-	private:
-		double frameTimeElapsed;
+  private: 
 
   /*-------------------------------------------------------
   | Protected attributes
@@ -101,13 +99,14 @@ namespace glutFramework {
 		double elapsedTimeInSeconds;
 		static GlutFramework *instance;
 
-
 		Vector<float> eyeVector;
 		Vector<float> centerVector;
 		Vector<float> upVector;
 
 		float position;
 		float direction;
+
+		double frameTimeElapsed;
 
   /*-------------------------------------------------------
   | Public attributes
@@ -259,8 +258,8 @@ namespace glutFramework {
     |   the vector describing orientation. Normally (0,1,0)
     -----------------------------------------------------*/
 		void setLookAt(float eyeX, float eyeY, float eyeZ,
-					   float centerX, float centerY, float centerZ,
-					   float upX, float upY, float upZ);
+                   float centerX, float centerY, float centerZ,
+                   float upX, float upY, float upZ);
 
     /*-----------------------------------------------------
 		| The position of the "eye" or camera in 3D space
@@ -336,53 +335,6 @@ namespace glutFramework {
 		static void specialKeyboardDownWrapper(int key, int x, int y);
 		static void specialKeyboardUpWrapper(int key, int x, int y);
 	};
-
-
-  /*********************************************************
-  * Derive sub-class for framework of application
-  *********************************************************/
-	class GlutFrameworkTri : public GlutFramework {
-
-    /*-----------------------------------------------------
-		| The display function is called at a specified 
-    | frames-per-second (FPS). Any animation drawing code 
-    | can be run in the display method.
-    |
-		| @param dTime - the change in time (seconds)
-    -----------------------------------------------------*/
-		virtual void display(float dTime);
-
-    /*-----------------------------------------------------
-		| Called when the mouse buttons are pressed.
-    |
-		| @param button - the mouse buttons
-		| @param state - the state of the buttons
-		| @param x - the x coordinate
-		| @param y - the y coordinate
-    -----------------------------------------------------*/
-		virtual void mouseButtonPress(int button, int state, 
-                                  int x, int y);
-
-    /*-----------------------------------------------------
-		| Called when the mouse moves on the screen.
-    |
-		| @param x - the x coordinate
-		| @param y - the y coordinate
-    -----------------------------------------------------*/
-		virtual void mouseMove(int x, int y);
-
-    /*-----------------------------------------------------
-		| The keyboard function is called when a standard key 
-    | is pressed down.
-    |
-		| @param key - the key press
-		| @param x - the x coordinate of the mouse
-		| @param y - the y coordinate of the mouse
-    -----------------------------------------------------*/
-		virtual void keyboardDown( unsigned char key, 
-                               int x, int y );
-
-  };
 
 } // namespace
 #endif

@@ -11,10 +11,9 @@
 #include <unistd.h>
 
 // Local file definitions
-#include "polygon3/polygon3.hpp"
-#include "glut/GlutFramework.hpp"
-
-
+#include "polygon3/Polygon3.hpp"
+#include "polygon3/Vertex3.hpp"
+#include "glut/GlutFrameworkTri.hpp"
 
 
 /***********************************************************
@@ -145,16 +144,18 @@ int main( int argc, char *argv[] )
   // Initialzize hull
   initDoubleTriangle(vHead);
 
-  // free vertex data
-  freeVertexList(vHead);
-
   // Render data
-  glutFramework::GlutFrameworkTri framework;
+  glutFramework::GlutFrameworkTri framework(vHead);
   framework.setLookAt(0.0, 2.0, 10.0, 
                       0.0, 2.0, 0.0, 
                       0.0, 1.0, 0.0);
-  framework.startFramework(argc, argv);
+
   // No code below startFramework() will get executed
+  framework.startFramework(argc, argv);
+
+
+  // free vertex data
+  freeVertexList(vHead);
 
   return 0;
 }

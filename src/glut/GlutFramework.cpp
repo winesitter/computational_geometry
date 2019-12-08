@@ -58,12 +58,15 @@ namespace glutFramework {
   | application.
   --------------------------------------------------------*/
 	void GlutFramework::startFramework(int argc, char *argv[]) {
-		setInstance();	// Sets the instance to self, used in the callback wrapper functions
+    // Sets the instance to self, 
+    // used in the callback wrapper functions
+		setInstance();	
 		
 		// Initialize GLUT
 		glutInit(&argc, argv);
 		glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
-		glutInitWindowPosition(WINDOW_X_POSITION, WINDOW_Y_POSITION);
+		glutInitWindowPosition(WINDOW_X_POSITION, 
+                           WINDOW_Y_POSITION);
 		glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		glutCreateWindow(title.c_str()); 
 		
@@ -180,7 +183,8 @@ namespace glutFramework {
   | @param x - the x coordinate of the mouse
   | @param y - the y coordinate of the mouse
   --------------------------------------------------------*/
-	void GlutFramework::keyboardUp( unsigned char key, int x, int y ) 
+	void GlutFramework::keyboardUp( unsigned char key, 
+                                  int x, int y ) 
 	{
 		// Subclass and override this method
     std::ignore = x;
@@ -246,8 +250,8 @@ namespace glutFramework {
 		glMatrixMode( GL_MODELVIEW );
 		glLoadIdentity();
 		gluLookAt(eyeVector.x, eyeVector.y, eyeVector.z,
-				  centerVector.x, centerVector.y, centerVector.z,
-				  upVector.x, upVector.y, upVector.z);
+              centerVector.x, centerVector.y, centerVector.z,
+              upVector.x, upVector.y, upVector.z);
 	}
 	
   /*--------------------------------------------------------
@@ -380,14 +384,16 @@ namespace glutFramework {
   | be subclassed.
   -------------------------------------------------------*/
 	void GlutFramework::displayFramework() {
-		if(displayTimer.isStopped()) {			// Start the timer on the initial frame
+    // Start the timer on the initial frame
+		if(displayTimer.isStopped()) {			
 			displayTimer.start();
 		}
 		
 		glClearColor(0.0, 0.0, 0.0, 1.0);
-		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Clear once
-		
-		displayTimer.stop();		// Stop the timer and get the elapsed time in seconds
+    // Clear once
+		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); 
+		// Stop the timer and get the elapsed time in seconds
+		displayTimer.stop();		
 		elapsedTimeInSeconds = displayTimer.getElapsedSeconds(); // seconds
 		
 		setupLights();
@@ -396,7 +402,10 @@ namespace glutFramework {
 		display(elapsedTimeInSeconds);
 		
 		glutSwapBuffers();
-		displayTimer.start();		// reset the timer to calculate the time for the next frame
+
+    // reset the timer to calculate the 
+    // time for the next frame
+		displayTimer.start();		
 	}
 	
 	/**********************************************************
@@ -436,87 +445,6 @@ namespace glutFramework {
 	
 	void GlutFramework::specialKeyboardUpWrapper(int key, int x, int y) {
 		instance->specialKeyboardUp(key,x,y);
-	}
-
-
-
-  /*********************************************************
-  * GlutFrameworkTri Sub-Class definition
-  *********************************************************/
-
-  /*-------------------------------------------------------
-  | The display function is called at a specified 
-  | frames-per-second (FPS). Any animation drawing code 
-  | can be run in the display method.
-  |
-  | @param dTime - the change in time (seconds)
-  --------------------------------------------------------*/
-	void GlutFrameworkTri::display(float dTime) {
-
-    (void) dTime;
-
-		// DEMO: Create a teapot and move it 
-    // back and forth on the y-axis
-		glTranslatef(0.0f, position, 0.0f);
-		glutSolidTeapot(2.5); 
-		if(position > 4 && direction > 0) {
-			direction = -1.0 / FRAME_TIME;
-		} else if(position < -4 && direction < 0) {
-			direction = 1.0 / FRAME_TIME;
-		}		
-		position += direction;
-	}
-
-  /*--------------------------------------------------------
-  | Called when the mouse buttons are pressed.
-  |
-  | @param button - the mouse buttons
-  | @param state - the state of the buttons
-  | @param x - the x coordinate
-  | @param y - the y coordinate
-  --------------------------------------------------------*/
-	void GlutFrameworkTri::mouseButtonPress(int button, int state, 
-                                       int x, int y) {
-    //std::ignore = button;
-    std::ignore = state;
-
-    if (button == 0)
-      printf("LeftMouseButtonPress: x: %d y: %d\n", x, y);
-		
-	}
-
-  /*--------------------------------------------------------
-  | Called when the mouse moves on the screen.
-  |
-  | @param x - the x coordinate
-  | @param y - the y coordinate
-  --------------------------------------------------------*/
-	void GlutFrameworkTri::mouseMove(int x, int y) {
-		printf("MouseMove: x: %d y: %d\n", x, y);
-	}
-
-  /*--------------------------------------------------------
-  | The keyboard function is called when a standard key 
-  | is pressed down.
-  |
-  | @param key - the key press
-  | @param x - the x coordinate of the mouse
-  | @param y - the y coordinate of the mouse
-  --------------------------------------------------------*/
-	void GlutFrameworkTri::keyboardDown( unsigned char key, 
-                                       int x, int y ) 
-	{
-		// Subclass and override this method
-    std::ignore = x;
-    std::ignore = y;
-		printf( "KeyboardDown: %c = %d\n", key, (int)key );
-
-    // 27 = ESC , 113 = q 
-		if( (key==27) || (key == 113) ){ 
-			exit (0); 
-		}
-		
-		keyStates.keyDown( (int)key );
 	}
 	
 } // namespace
