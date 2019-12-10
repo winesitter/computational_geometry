@@ -12,7 +12,7 @@
 class Edge3 {
 
   private:
-    int                     i;           // edge index
+    int                     index;       // edge index
     std::array<Vertex3*,2>  vertices;    // edge vertices
     std::array<Face3*,2>    adjfaces;    // adjacent faces
     Face3*                  newFace;     // Pointer to incident new face
@@ -24,21 +24,16 @@ class Edge3 {
     /*------------------------------------------------------
     * Constructor
     ------------------------------------------------------*/
-    Edge3( int i = -1 ) : i(i)
-    {
-      for (int j = 0; j < 2; ++j) {
-        vertices[j] = nullptr;
-        adjfaces[j] = nullptr;
-      }
-      remove      = false;
-      newFace     = nullptr;
-      next = prev = nullptr;
-    }
+    // Create empty edge
+    Edge3();
+
+    // Create edge from vertices
+    Edge3( Vertex3 *v0, Vertex3 *v1 );
 
     /*------------------------------------------------------
     * Setter functions 
     ------------------------------------------------------*/
-    void setI( int i0 ){ i = i0; }
+    void setInd( int i0 ){ index = i0; }
     void setVert( int i0, Vertex3* v ){ vertices[i0] = v; }
     void setFace( int i0, Face3* f ){ adjfaces[i0] = f; }
     void setNewFace( Face3* f ){ newFace = f; }
@@ -49,7 +44,7 @@ class Edge3 {
     /*------------------------------------------------------
     * Getter functions 
     ------------------------------------------------------*/
-    int       getI( void ){ return i; }
+    int       getInd( void ){ return index; }
     Vertex3*  getVert( int i0 ){ return vertices[i0]; }
     Face3*    getFace( int i0 ){ return adjfaces[i0]; }
     Face3*    getNewFace( void ){ return newFace; }
@@ -62,9 +57,9 @@ class Edge3 {
     ------------------------------------------------------*/
     friend std::ostream& operator<< (std::ostream& out, 
                                      Edge3& e) {
-      out << "Edge " << e.getI() << ": V" 
-        << e.getVert(0)->getI() << " -> V" 
-        << e.getVert(1)->getI();
+      out << "Edge " << e.getInd() << ": V" 
+        << e.getVert(0)->getInd() << " -> V" 
+        << e.getVert(1)->getInd();
       return out;
 }
 

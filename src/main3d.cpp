@@ -144,6 +144,8 @@ int main( int argc, char *argv[] )
   // Initialzize hull
   initDoubleTriangle(vHead);
 
+
+
   // Render data
   glutFramework::GlutFrameworkTri framework(vHead);
   framework.setLookAt(0.0, 2.0, 10.0, 

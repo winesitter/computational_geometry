@@ -11,7 +11,7 @@
 class Vertex3 {
 
   private:
-    int      i;         // Vertex index in list
+    int      index;     // Vertex index in list
     bool     onHull;    // True iff on convex hull
     bool     mark;      // True iff already processed
 
@@ -25,10 +25,10 @@ class Vertex3 {
 
   public:
     /*------------------------------------------------------
-    * Constructor
+    | Constructor
     ------------------------------------------------------*/
     Vertex3( int i = -1, int x = 0, int y = 0, int z = 0) 
-            : i(i), x(x), y(y), z(z) 
+            : index(i), x(x), y(y), z(z) 
     {
       onHull        = false;
       mark          = false;
@@ -37,9 +37,9 @@ class Vertex3 {
     }
 
     /*------------------------------------------------------
-    * Setter functions 
+    | Setter functions 
     ------------------------------------------------------*/
-    void setI( int i0 ){ i = i0; }
+    void setI( int i0 ){ index = i0; }
     void setMark( bool doMark ){ mark = doMark; }
     void setOnHull( bool isOn ){ onHull = isOn; }
     void setDuplicate( Edge3* e){ duplicate = e; }
@@ -47,9 +47,9 @@ class Vertex3 {
     void setPrev( Vertex3* v ){ prev = v; }
 
     /*------------------------------------------------------
-    * Getter functions 
+    | Getter functions 
     ------------------------------------------------------*/
-    int       getI( void ){ return i; }
+    int       getInd( void ){ return index; }
     bool      getMark( void ){ return mark; }
     bool      getOnHull( void ){ return onHull; }
     Edge3*    getDuplicate( void ){ return duplicate; }
@@ -57,14 +57,34 @@ class Vertex3 {
     Vertex3*  getPrev( void ){ return prev; }
 
     /*------------------------------------------------------
-    * Operators redefinition 
+    | Operators redefinition 
     ------------------------------------------------------*/
+    // Vertex addition
+    Vertex3 operator+( const Vertex3 &other) const;
+    // Vertex subtraction
+    Vertex3 operator-( const Vertex3 &other) const;
+    // Vertex stream output
     friend std::ostream& operator<<(std::ostream& out,   
                                     Vertex3& v) {
-      out << "Vertex " << v.getI() << ": ( " << v.x 
+      out << "Vertex " << v.getInd() << ": ( " << v.x 
       << ", " << v.y << ", " << v.z << " )"; 
       return out;
-}
+    }
+
+    /*------------------------------------------------------
+    | Public functions
+    ------------------------------------------------------*/
+
+    /*********************************************************
+    * Check this vertex for collinearity with two 
+    * other vertices
+    *
+    * @param Vertex3* b, Vertex3* c - Vertices to check for 
+    *   collinearity
+    * @return true if collinear, false if not
+    *********************************************************/
+    bool isCollinear( const Vertex3 &b, 
+                      const Vertex3 &c ) const;
 
 };
 

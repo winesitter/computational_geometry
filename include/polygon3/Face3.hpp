@@ -13,7 +13,7 @@
 class Face3 {
 
   private:
-    int                     i;          // Face index
+    int                     index;      // Face index
     std::array<Edge3*,3>    edges;      // edges of face
     std::array<Vertex3*,3>  vertices;   // vertices of face
     bool                    visible;    // is visible
@@ -24,20 +24,20 @@ class Face3 {
     /*------------------------------------------------------
     * Constructor
     ------------------------------------------------------*/
-    Face3( int i = -1 ) : i(i)
-    {
-      for (int j = 0; j < 2; ++j) {
-        edges[j]    = nullptr;
-        vertices[j] = nullptr;
-      }
-      visible = false;
-      next = prev = nullptr;
-    }
+    // Create empty face 
+    Face3();
+
+    // Create face from vertices
+    Face3( Vertex3 *v0, Vertex3 *v1, Vertex3 *v2 );
+
+    // Create twin face 
+    Face3( Face3 *f0 );
+
 
     /*------------------------------------------------------
     * Setter functions 
     ------------------------------------------------------*/
-    void setI( int i0 ){ i = i0; }
+    void setInd( int i0 ){ index = i0; }
     void setVert( int i0, Vertex3* v ){ vertices[i0] = v; }
     void setEdge( int i0, Edge3* e ){ edges[i0] = e; }
     void setVisible( bool v ){ visible = v; }
@@ -47,7 +47,7 @@ class Face3 {
     /*------------------------------------------------------
     * Getter functions 
     ------------------------------------------------------*/
-    int       getI( void ){ return i; }
+    int       getInd( void ){ return index; }
     Vertex3*  getVert( int i0 ){ return vertices[i0]; }
     Edge3*    getEdge( int i0 ){ return edges[i0]; }
     bool      getVisible( void ){ return visible; }
@@ -59,12 +59,20 @@ class Face3 {
     ------------------------------------------------------*/
     friend std::ostream& operator<< (std::ostream& out, 
                                      Face3& f) {
-      out << "Face " << f.getI() << ": V" 
-        << f.getVert(0)->getI() << " -> V" 
-        << f.getVert(1)->getI() << " -> V" 
-        << f.getVert(2)->getI();
+      out << "Face " << f.getInd() << "\n Vertices: V" 
+        << f.getVert(0)->getInd() << " -> V" 
+        << f.getVert(1)->getInd() << " -> V" 
+        << f.getVert(2)->getInd() << "\n Edges: "
+        << *f.getEdge(0) << " -> " << *f.getEdge(1)
+        << " -> " << *f.getEdge(2);
+
       return out;
     }
+
+    /*------------------------------------------------------
+    * Public functions
+    ------------------------------------------------------*/
+    int volumeSign( Vertex3* p );
 
 };
 

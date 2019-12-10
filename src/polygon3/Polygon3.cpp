@@ -3,21 +3,8 @@
 
 #include "polygon3/Polygon3.hpp"
 #include "polygon3/Vertex3.hpp"
-
-/***********************************************************
-* Check three vertices for collinearity
-***********************************************************/
-bool isCollinear3( Vertex3* a, Vertex3* b, Vertex3* c )
-{
-  return 
-    ( c->z - a->z )*( b->y - a->y )-
-    ( b->z - a->z )*( c->y - a->y )== 0
-  &&( b->z - a->z )*( c->x - a->x )-
-    ( b->x - a->x )*( c->z - a->z )== 0
-  &&( b->x - a->x )*( c->y - a->y )-
-    ( b->y - a->y )*( c->x - a->x )== 0;
-}
-
+#include "polygon3/Face3.hpp"
+#include "polygon3/Edge3.hpp"
 
 /***********************************************************
 * Create double triangle as initial polytope  
@@ -27,21 +14,55 @@ bool isCollinear3( Vertex3* a, Vertex3* b, Vertex3* c )
 * 3) Find a fourht point v3, which is not coplanar with
 *    (v0, v1, v2)
 ***********************************************************/
-void initDoubleTriangle( Vertex3* verts )
+void initDoubleTriangle( Vertex3* vertices )
 {
-  (void) verts;
-  /*
-  Vertex3* v0, v1, v2, v3, t;
-  Face3*   f0, f1;
-  Edge3*   e0, e1, e2, s;
-  int      vol;
+  //Vertex3* v0, v1, v2; //, v3, t;
+  //Face3*   f0, f1;
+  //Edge3*   e0, e1, e2, s;
+  //int      vol;
 
   // Find three noncolinear points
-  v0 = verts[0]; 
+  Vertex3* v0 = vertices;
+  while ( v0->isCollinear( *v0->getNext(), *v0->getNext()->getNext() ) ) 
+    if ( ( v0 = v0->getNext() ) == vertices ) {
+      std::cout << "[ERROR] initDoubleTriangle: All points are collinear!" << std::endl;
+      exit(0);
+    }
 
-  */
+  Vertex3* v1 = v0->getNext();
+  Vertex3* v2 = v1->getNext();
 
-  //while ( isCollinear3( v0, v0->next, v0->next->next )
+  // Mark these vertices as processed
+  v0->setMark(true);
+  v1->setMark(true);
+  v2->setMark(true);
 
+  // Create two twin faces
+  Face3* f0 = new Face3(v0, v1, v2);
+  Face3* f1 = new Face3(f0);
+
+  std::cout << *f0 << std::endl;
+  std::cout << *f1 << std::endl;
+
+  // Find fourth, noncoplanar point to form tetrahedron
+  Vertex3* v3 = v2->getNext();
+
+  int vol = f0->volumeSign( v3 );
+
+  while ( !vol ) {
+    if ( ( v3 = v3->getNext() ) == v0 ) {
+      std::cout << "[ERROR] initDoubleTriangle(): All points are coplanar!" << std::endl;
+      exit(0);
+    }
+    vol = f0->volumeSign( v3 );
+  }
+
+  // Insure that v3 will be the first added
+  vertices = v3;
+
+  std::cout << *v0 << std::endl;
+  std::cout << *v1 << std::endl;
+  std::cout << *v2 << std::endl;
+  std::cout << *v3 << std::endl;
 
 } /* initDoubleTriangle() */
