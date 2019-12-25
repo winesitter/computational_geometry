@@ -19,23 +19,21 @@ class Edge3 {
     bool                    remove;      // Remove edge
     Edge3*                  next;        // next edge
     Edge3*                  prev;        // previous edge
+    Polygon3*               poly;        // Polygon parent
 
   public:
     /*------------------------------------------------------
     * Constructor
     ------------------------------------------------------*/
-    // Create empty edge
-    Edge3();
-
     // Create edge from vertices
-    Edge3( Vertex3 *v0, Vertex3 *v1 );
+    Edge3( Polygon3* poly, Vertex3 *v0, Vertex3 *v1 );
 
     /*------------------------------------------------------
     * Setter functions 
     ------------------------------------------------------*/
     void setInd( int i0 ){ index = i0; }
     void setVert( int i0, Vertex3* v ){ vertices[i0] = v; }
-    void setFace( int i0, Face3* f ){ adjfaces[i0] = f; }
+    void setAdjFace( int i0, Face3* f ){ adjfaces[i0] = f; }
     void setNewFace( Face3* f ){ newFace = f; }
     void setRemove( bool t ){ remove = t; }
     void setNext( Edge3* e ){ next = e; }
@@ -46,7 +44,7 @@ class Edge3 {
     ------------------------------------------------------*/
     int       getInd( void ){ return index; }
     Vertex3*  getVert( int i0 ){ return vertices[i0]; }
-    Face3*    getFace( int i0 ){ return adjfaces[i0]; }
+    Face3*    getAdjFace( int i0 ){ return adjfaces[i0]; }
     Face3*    getNewFace( void ){ return newFace; }
     bool      getRemove( void ){ return remove; }
     Edge3*    getNext( void ){ return next; }

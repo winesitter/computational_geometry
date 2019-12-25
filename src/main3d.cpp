@@ -78,12 +78,12 @@ static Vertex3* initVertexList(std::vector<std::string> &vecOfStrs)
     std::cout << "Create new " << *next << std::endl;
 
     // Initialize head of list
-    if (prev == nullptr)
+    if (prev == nullptr) {
       head = next;
     // create links for list
-    else {
-      prev->setNext(next);
-      next->setPrev(prev);
+    } else {
+      prev->setNext( next );
+      next->setPrev( prev );
     }
 
     // store last vertex
@@ -142,9 +142,8 @@ int main( int argc, char *argv[] )
   Vertex3* vHead = initVertexList(vecOfStrs);
 
   // Initialzize hull
-  initDoubleTriangle(vHead);
-
-
+  Polygon3* poly = new Polygon3(vHead);
+  delete poly;
 
   // Render data
   glutFramework::GlutFrameworkTri framework(vHead);

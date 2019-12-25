@@ -19,20 +19,20 @@ class Face3 {
     bool                    visible;    // is visible
     Face3*                  next;       // next face
     Face3*                  prev;       // previous face
+    Polygon3*               poly;       // Polygon parent
 
   public:
     /*------------------------------------------------------
     * Constructor
     ------------------------------------------------------*/
-    // Create empty face 
-    Face3();
-
     // Create face from vertices
-    Face3( Vertex3 *v0, Vertex3 *v1, Vertex3 *v2 );
+    Face3( Polygon3* poly0, Vertex3 *v0, Vertex3 *v1, Vertex3 *v2 );
 
     // Create twin face 
-    Face3( Face3 *f0 );
+    Face3( Polygon3* poly0, Face3 *f0 );
 
+    // Create face from edge and vertex
+    Face3( Polygon3* poly0, Edge3 *e0, Vertex3* v0);
 
     /*------------------------------------------------------
     * Setter functions 
@@ -50,7 +50,7 @@ class Face3 {
     int       getInd( void ){ return index; }
     Vertex3*  getVert( int i0 ){ return vertices[i0]; }
     Edge3*    getEdge( int i0 ){ return edges[i0]; }
-    bool      getVisible( void ){ return visible; }
+    bool      isVisible( void ){ return visible; }
     Face3*    getNext( void ){ return next; }
     Face3*    getPrev( void ){ return prev; }
 
