@@ -3,6 +3,9 @@
 
 #include "glut/GlutFramework.hpp"
 
+#include "polygon3/Polygon3.hpp"
+#include "polygon3/Face3.hpp"
+#include "polygon3/Edge3.hpp"
 #include "polygon3/Vertex3.hpp"
 
 
@@ -17,10 +20,10 @@ namespace glutFramework {
   | Public attributes
   -------------------------------------------------------*/
   private:
-    Vertex3*  vertices;
-    float     rotation;
-    Vector<float> rotVector;
-    Vector<float> transVector;
+    Polygon3*       polygon;
+    float           rotation;
+    Vector<float>   rotVector;
+    Vector<float>   transVector;
 
   /*-------------------------------------------------------
   | Public methods
@@ -29,7 +32,7 @@ namespace glutFramework {
     /*-----------------------------------------------------
     | Constructor and destructor methods
     -----------------------------------------------------*/
-		GlutFrameworkTri(Vertex3* v);
+		GlutFrameworkTri(Polygon3* p);
 
     /*-----------------------------------------------------
 		| The display function is called at a specified 
@@ -88,12 +91,17 @@ namespace glutFramework {
     |
     | @param *v - linked list of vertices
     -----------------------------------------------------*/
-    virtual void drawVertices( Vertex3* v );
+    virtual void drawPolyVertices( Vertex3* v );
 
     /*-----------------------------------------------------
     | Function to draw meshgrid.
     -----------------------------------------------------*/
     virtual void drawMeshgrid( void );
+
+    /*-----------------------------------------------------
+    | Function to draw all polygon faces
+    -----------------------------------------------------*/
+    virtual void drawPolyFaces( Polygon3* p );
 
   };
 

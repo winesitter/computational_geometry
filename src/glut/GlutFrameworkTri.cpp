@@ -9,9 +9,9 @@ namespace glutFramework {
   /*--------------------------------------------------------
   | Constructor
   --------------------------------------------------------*/
-	GlutFrameworkTri::GlutFrameworkTri(Vertex3* v) : GlutFramework(){ 
+	GlutFrameworkTri::GlutFrameworkTri( Polygon3* p ) : GlutFramework(){ 
 
-    vertices = v;
+    polygon = p;
 
 		elapsedTimeInSeconds = 0;
 		frameTimeElapsed = 0;
@@ -38,6 +38,8 @@ namespace glutFramework {
 
     (void) dTime;
 
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     // Apply geometric transformation on visible bodies
     glRotatef(rotVector.x, 1.0f, 0.0f, 0.0f);
     glRotatef(rotVector.y, 0.0f, 1.0f, 0.0f);
@@ -47,31 +49,9 @@ namespace glutFramework {
 
     // Draw stuff
     drawMeshgrid();
-    drawVertices(vertices);
+    drawPolyVertices(this->polygon->getVertexHead());
+    drawPolyFaces(this->polygon);
 
-    // DEMO: Create a teapot and rotate it
-		//glutSolidTeapot(2.5); 
-
-    /*
-		position += 10. * direction;
-
-    if (position >= 360)
-      position = 0.0;
-    */
-
-		// DEMO: Create a teapot and move it 
-    // back and forth on the y-axis
-    /*
-		glTranslatef(0.0f, position, 0.0f);
-		glutSolidTeapot(2.5); 
-
-		if(position > 4 && direction > 0) {
-			direction = -1.0 / FRAME_TIME;
-		} else if(position < -4 && direction < 0) {
-			direction = 1.0 / FRAME_TIME;
-		}		
-		position += direction;
-    */
 	}
 
   /*--------------------------------------------------------
@@ -178,7 +158,7 @@ namespace glutFramework {
   |
   | @param *v - linked list of vertices
   -------------------------------------------------------*/ 
-  void GlutFrameworkTri::drawVertices( Vertex3* v )
+  void GlutFrameworkTri::drawPolyVertices( Vertex3* v )
   {
     // Draw vertices
     Vertex3* head = v;
@@ -188,7 +168,7 @@ namespace glutFramework {
       glPushMatrix();
       glColor3f(1.0,1.0,1.0);
       glTranslatef(cur->x, cur->y, cur->z);
-      glutSolidCube(0.4);
+      glutSolidCube(0.1);
       glPopMatrix();
       cur = cur->getNext();
     } while( cur != head) ;
@@ -218,6 +198,36 @@ namespace glutFramework {
       glEnd();
       glPopMatrix();
     }
+  }
+
+  /*-------------------------------------------------------
+  | Function to draw triangular polygon faces.
+  |
+  | @param *p - linked list of vertices
+  -------------------------------------------------------*/ 
+  void GlutFrameworkTri::drawPolyFaces( Polygon3* p )
+  {
+    // Draw vertices
+    Face3* curFace = p->getFaceHead();
+
+    glBegin(GL_TRIANGLES);
+    do {
+      glColor4f(1.0,1.0,1.0,0.2);
+      glVertex3f(curFace->getVert(0)->x,
+                 curFace->getVert(0)->y,
+                 curFace->getVert(0)->z);
+      glVertex3f(curFace->getVert(1)->x,
+                 curFace->getVert(1)->y,
+                 curFace->getVert(1)->z);
+      glVertex3f(curFace->getVert(2)->x,
+                 curFace->getVert(2)->y,
+                 curFace->getVert(2)->z);
+
+      curFace = curFace->getNext();
+    } while (curFace != p->getFaceHead());
+    glEnd();
+
+
   }
 
 } // namespace

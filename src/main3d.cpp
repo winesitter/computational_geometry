@@ -143,10 +143,9 @@ int main( int argc, char *argv[] )
 
   // Initialzize hull
   Polygon3* poly = new Polygon3(vHead);
-  delete poly;
 
   // Render data
-  glutFramework::GlutFrameworkTri framework(vHead);
+  glutFramework::GlutFrameworkTri framework(poly);
   framework.setLookAt(0.0, 2.0, 10.0, 
                       0.0, 2.0, 0.0, 
                       0.0, 1.0, 0.0);
@@ -157,6 +156,8 @@ int main( int argc, char *argv[] )
 
   // free vertex data
   freeVertexList(vHead);
+
+  delete poly;
 
   return 0;
 }
